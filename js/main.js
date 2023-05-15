@@ -1,7 +1,7 @@
-import * as THREE from '/js/three.module.js'
-import { GLTFLoader } from '/js/gltfLoader.module.js'
-import { FBXLoader } from '/js/fbxLoader.module.js'
-import { OrbitControls } from '/js/orbitControls.js'
+import * as THREE from './three.module.js'
+import { GLTFLoader } from './gltfLoader.module.js'
+import { FBXLoader } from './fbxLoader.module.js'
+import { OrbitControls } from './orbitControls.js'
 
 if (location.protocol.startsWith('https')) {
 	navigator.serviceWorker.register('service-worker.js')
@@ -68,7 +68,7 @@ reader.onload = e => {
 }
 
 function loadModel() {
-	gltfLoader.load('/models/goku.glb',
+	gltfLoader.load('./models/goku.glb',
 		gltf => {
 			goku = gltf.scene
 			goku.encoding = THREE.sRGBEncoding
@@ -90,7 +90,7 @@ function loadModel() {
 
 function loadAnimations() {
 	animationModels.forEach(el => {
-		fbxLoader.load(`/models/${el}.fbx`, fbx => {
+		fbxLoader.load(`./models/${el}.fbx`, fbx => {
 			animations[el] = mixer.clipAction(fbx.animations[0])
 			animations[el].name = el
 			if (el == 'idle') {
