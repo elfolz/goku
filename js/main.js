@@ -11,7 +11,7 @@ if (location.protocol.startsWith('https')) {
 	}
 }
 
-const audio = new Audio('../audio/oi.mp3')
+const audio = new Audio('./audio/oi.mp3')
 const clock = new THREE.Clock()
 const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true, preserveDrawingBuffer: true})
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth /window.innerHeight, 0.1, 1000)
@@ -83,7 +83,8 @@ function loadModel() {
 			scene.add(goku)
 			loadAnimations()
 		}, xhr => {
-			progress['goku'] = (xhr.loaded / xhr.total) * 100
+			console.log(xhr)
+			progress['goku'] = parseInt((xhr.loaded / xhr.total) * 100)
 		}, error => {
 			console.error(error)
 		}
@@ -100,7 +101,7 @@ function loadAnimations() {
 				animations[el].play()
 			}
 		}, xhr => {
-			progress[el] = (xhr.loaded / xhr.total) * 100
+			progress[el] = parseInt((xhr.loaded / xhr.total) * 100)
 		}, error => {
 			console.error(error)
 		})
