@@ -11,6 +11,7 @@ if (location.protocol.startsWith('https')) {
 	}
 }
 
+const audio = new Audio('../audio/oi.mp3')
 const clock = new THREE.Clock()
 const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true, preserveDrawingBuffer: true})
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth /window.innerHeight, 0.1, 1000)
@@ -55,6 +56,7 @@ scene.add(dirLight1)
 scene.add(dirLight2)
 scene.add(dirLight3)
 
+var audioPlayied = false
 var clockDelta = 0
 var gameStarted = false
 var goku
@@ -111,6 +113,11 @@ function initGame() {
 	document.body.classList.add('loaded')
 	document.body.removeChild(document.querySelector('figure'))
 	document.querySelector('footer').style.removeProperty('display')
+	document.onclick = () => {
+		if (audioPlayied) return
+		audio.play()
+		audioPlayied = true
+	}
 	resizeScene()
 	animate()
 }
