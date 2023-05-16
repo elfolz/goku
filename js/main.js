@@ -83,7 +83,6 @@ function loadModel() {
 			scene.add(goku)
 			loadAnimations()
 		}, xhr => {
-			console.log(xhr)
 			progress['goku'] = (xhr.loaded / (xhr.total || 1)) * 100
 		}, error => {
 			console.error(error)
