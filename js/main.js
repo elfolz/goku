@@ -84,7 +84,7 @@ function loadModel() {
 			loadAnimations()
 		}, xhr => {
 			console.log(xhr)
-			progress['goku'] = parseInt((xhr.loaded / xhr.total) * 100)
+			progress['goku'] = (xhr.loaded / (xhr.total || 1)) * 100
 		}, error => {
 			console.error(error)
 		}
@@ -101,7 +101,7 @@ function loadAnimations() {
 				animations[el].play()
 			}
 		}, xhr => {
-			progress[el] = parseInt((xhr.loaded / xhr.total) * 100)
+			progress[el] = (xhr.loaded / (xhr.total || 1)) * 100
 		}, error => {
 			console.error(error)
 		})
