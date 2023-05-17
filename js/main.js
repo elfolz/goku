@@ -16,9 +16,9 @@ const clock = new THREE.Clock()
 const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true, preserveDrawingBuffer: true})
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth /window.innerHeight, 0.1, 1000)
 const hemisphereLight = new THREE.HemisphereLight(0xddeeff, 0x000000, 0.25)
-const dirLight1 = new THREE.DirectionalLight(0xFFFFFF, 2)
-const dirLight2 = new THREE.DirectionalLight(0xFFFFFF, 2)
-const dirLight3 = new THREE.DirectionalLight(0xFFFFFF, 2)
+const dirLight1 = new THREE.DirectionalLight(0xFFFFFF, 1)
+const dirLight2 = new THREE.DirectionalLight(0xFFFFFF, 1)
+const dirLight3 = new THREE.DirectionalLight(0xFFFFFF, 1)
 const gltfLoader = new GLTFLoader()
 const fbxLoader = new FBXLoader()
 const scene = new THREE.Scene()
@@ -33,7 +33,7 @@ const progress = new Proxy({}, {
 		let values = Object.values(target).slice()
 		let progressbar = document.querySelector('progress')
 		let total = values.reduce((a, b) => a + b, 0)
-		total = total / 1
+		total = total / (animationModels.length + 1)
 		if (progressbar) progressbar.value = parseInt(total || 0)
 		if (total >= 100) setTimeout(() => initGame(), 500)
 		return true
@@ -41,8 +41,7 @@ const progress = new Proxy({}, {
 })
 
 scene.background = null
-renderer.outputEncoding = THREE.sRGBEncoding
-renderer.physicallyCorrectLights = true
+renderer.outputColorSpace = THREE.SRGBColorSpace
 renderer.sortObjects = false
 renderer.toneMapping = THREE.ACESFilmicToneMapping
 renderer.setClearColor(0x000000, 0)
@@ -73,10 +72,9 @@ function loadModel() {
 	gltfLoader.load('./models/goku.glb',
 		gltf => {
 			goku = gltf.scene
-			goku.encoding = THREE.sRGBEncoding
+			goku.colorSpace = THREE.SRGBColorSpace
 			goku.position.y = -30
 			mixer = new THREE.AnimationMixer(goku)
-			mixer.clipAction(gltf.animations[0]).play()
 			dirLight1.target = goku
 			dirLight2.target = goku
 			dirLight3.target = goku
